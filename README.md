@@ -1,6 +1,6 @@
 # Chào mừng đến với Blog của Khúc Thu Minh
 
-<img src="static/images/meme.jpg" alt="alt text" style="width: 300px; display: block; margin: auto; border-radius: 12px;" />
+<img src="/images/meme.jpg" alt="alt text" style="width: 300px; display: block; margin: auto; border-radius: 12px;" />
 
 Here is all my contact links:
 
