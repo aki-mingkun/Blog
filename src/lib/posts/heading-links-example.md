@@ -5,6 +5,10 @@ updated: "2025-04-29"
 categories:
   - "sveltekit"
   - "markdown"
+  
+coverImage: "/images/linus-nylund-Q5QspluNZmM-unsplash.jpg"
+coverWidth: 16
+coverHeight: 9
 
 excerpt: Đây là bài viết về hệ phân tán.
 ---
