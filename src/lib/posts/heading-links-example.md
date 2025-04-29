@@ -5,8 +5,8 @@ updated: "2025-04-29"
 categories:
   - "sveltekit"
   - "markdown"
-  
-coverImage: "/images/linus-nylund-Q5QspluNZmM-unsplash.jpg"
+
+coverImage: "/images/hephantan.jpeg"
 coverWidth: 16
 coverHeight: 9
 
