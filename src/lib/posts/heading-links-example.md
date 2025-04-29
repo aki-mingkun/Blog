@@ -5,9 +5,7 @@ updated: "2025-04-29"
 categories:
   - "sveltekit"
   - "markdown"
-coverImage: "/static/images/jefferson-santos-fCEJGBzAkrU-unsplash.jpg"
-coverWidth: 16
-coverHeight: 9
+
 excerpt: Đây là bài viết về hệ phân tán.
 ---
 
