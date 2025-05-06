@@ -6,7 +6,7 @@ categories:
   - "sveltekit"
   - "markdown"
   - "svelte"
-coverImage: "/images/jerry-zhang-ePpaQC2c1xA-unsplash.jpg"
+coverImage: "/images/tien-trinh-va-luong.jpg"
 coverWidth: 16
 coverHeight: 9
 excerpt: Đây là bài tìm hiểu về tiến trình và luồng.
@@ -89,14 +89,7 @@ excerpt: Đây là bài tìm hiểu về tiến trình và luồng.
 
 ## 3. Khi nào dùng Thread vs Process 
 
-| Trường hợp             | Dùng Thread                          | Dùng Process                                | Cả hai                                           | Ví dụ bài toán                                  |
-|------------------------|--------------------------------------|---------------------------------------------|--------------------------------------------------|--------------------------------------------------|
-| Chia sẻ bộ nhớ         | ✅ Có thể chia sẻ RAM dễ dàng        | 🚫 Tách biệt hoàn toàn bộ nhớ               | ❌ Không cần                                     | Game Engine (render, AI, âm thanh...)            |
-| Tách biệt, bảo mật     | 🚫 Không an toàn                     | ✅ Mỗi tiến trình độc lập                   | ✅ Nếu cần cả chia sẻ + tách biệt                 | Trình duyệt (tab = process, thread nội)          |
-| Hiệu năng / tốc độ     | ✅ Tạo thread nhanh, ít tài nguyên   | 🚫 Tạo process tốn tài nguyên hơn           | ✅ Dùng thread trong process lớn                 | IDE (build + debug song song)                    |
-| Sự cố hệ thống         | 🚫 Thread crash ảnh hưởng toàn app   | ✅ Process crash không ảnh hưởng toàn hệ thống | ✅ Kết hợp nếu kiểm soát tốt lỗi             | Hệ thống ngân hàng                                |
-| Tính toán song song    | ✅ Tốt nếu chia được dữ liệu         | ✅ Dùng để tránh race conditions            | ✅ Tuỳ độ phức tạp                                | AI Training, Web Crawler, Image Processing       |
-
+![alt text](<../../../images/khi nào dùng thread&process.jpg>)
 ---
 
 ## 4. ChatGPT training trên hệ phân tán (Distributed System) như thế nào.
