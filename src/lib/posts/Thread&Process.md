@@ -16,11 +16,15 @@ excerpt: Đây là bài tìm hiểu về tiến trình và luồng.
 
 ### 1. Cấu hình phần cứng
 
+![alt text](../../../images/system-info.png)
+
 - **CPU**: AMD Ryzen 5 5625U with Radeon Graphics  
   - 6 nhân, 12 luồng  
   - Tốc độ ~2.3GHz  
   - Hỗ trợ **SMT (Simultaneous Multithreading)**  
  👉 Phù hợp cho đa nhiệm, lập trình, học máy, và chỉnh sửa video nhẹ
+
+![alt text](../../../images/task-manager.png)
 
 - **RAM**: 8GB (8192MB)  
   - Đủ cho: lướt web, lập trình, chạy IDE (VSCode, PyCharm,...)  
