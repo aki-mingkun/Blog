@@ -10,7 +10,7 @@ categories:
 coverImage: "/images/thong-diep-truyen-thong.webp"
 coverWidth: 16
 coverHeight: 9
-excerpt: This post shows you how syntax highlighting works here.
+excerpt: Đây là bài viết tìm hiểu về 1 dịch vụ truyền thông điệp.
 ---
 
 ## Bài Tập 1: Tìm Hiểu RabbitMQ – Cơ chế, Chức năng và Cài đặt
