@@ -1,5 +1,5 @@
 ---
-title: "Kế hoạch giữa kỳ"
+title: "Deliverable 1: Đề xuất đề tài và mô tả vấn đề"
 date: "2025-05-10"
 updated: "2025-05-10"
 categories:
