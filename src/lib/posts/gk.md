@@ -32,7 +32,8 @@ excerpt: Phân tích thư viện pickleDB và kế hoạch sử dụng thư vi�
 - Hỗ trợ thao tác cơ bản: set/get/delete và auto-save.
 
 ### Nhược điểm
-- Không phù hợp cho dữ liệu lớn.
+- Không thread-safe -> không phù hợp khi nhiều tiến trình cùng ghi vào DB.
+- Không phù hợp cho dữ liệu lớn, vì lưu vào 1 file duy nhất, đọc/ghi sẽ chậm nếu dữ liệu nhiều.
 - Thiếu tính năng nâng cao như truy vấn phức tạp, bảo mật, truy cập đồng thời.
 
 ### So sánh với các thư viện/framework khác
@@ -46,23 +47,38 @@ excerpt: Phân tích thư viện pickleDB và kế hoạch sử dụng thư vi�
 | **MongoDB** | Đa năng, mạnh mẽ | Yêu cầu cài đặt, phức tạp |
 
 ### Ứng dụng thực tế
-- Quản lý cấu hình người dùng.
-- Tạo cache tạm thời.
-- Lưu trạng thái app CLI hoặc desktop.
-- Học tập, giảng dạy NoSQL.
+- Lưu cấu hình ứng dụng: Cài đặt, tùy chọn người dùng.
+- Bộ nhớ đệm: Lưu tạm kết quả tính toán, dữ liệu API.
+- Quản lý phiên (đơn giản): Lưu thông tin đăng nhập (cho ứng dụng nhỏ).
+- Lưu dữ liệu thử nghiệm: Mô phỏng database khi phát triển.
+- Công cụ cá nhân: Quản lý việc, nhật ký, kết quả phân tích nhỏ.
 
 ---
 
 ## 2. Kế hoạch giữa kỳ
 
-### Đề tài: Xây dựng ứng dụng quản lý công việc cá nhân với pickleDB
+### Đề tài: Xây dựng 1 trang web quản lý công việc cá nhân với pickleDB
+
+#### Bài toán đặt ra
+
+- Trong dự án xây dựng trang web quản lý công việc cá nhân, bài toán cốt lõi mà pickleDB sẽ giải quyết là **lưu trữ và truy xuất thông tin** về các công việc (tiêu đề, mô tả, trạng thái, thời hạn, v.v.) **một cách cục bộ và đơn giản**.
 
 #### Vấn đề
-- Người dùng cần quản lý task một cách đơn giản, offline, không cần kết nối mạng hay hệ quản trị CSDL nặng.
+
+- **Làm sao để giao diện trực quan và dễ sử dụng?** Việc thiết kế một giao diện mà người dùng có thể dễ dàng thao tác, thêm, xem, chỉnh sửa và quản lý công việc một cách nhanh chóng và hiệu quả là rất quan trọng.
 
 #### Giải pháp
-- Sử dụng `pickleDB` để lưu trữ thông tin task.
-- Task gồm các thuộc tính: ID, nội dung, thời gian tạo, trạng thái.
-- Cho phép thêm, sửa, xóa, hoàn thành task.
-- Giao diện có thể là CLI hoặc GUI (Tkinter).
-- Tính năng nâng cao (tuỳ chọn): độ ưu tiên, sắp xếp, thống kê.
+*Tính đơn giản :*
+
+- Giảm thiểu yếu tố không cần thiết: Chỉ hiển thị những thông tin và chức năng quan trọng nhất. Tránh làm người dùng bị choáng ngợp bởi quá nhiều tùy chọn.
+- Bố cục rõ ràng: Sắp xếp các thành phần một cách logic và dễ hiểu. Sử dụng khoảng trắng hợp lý để tạo sự thông thoáng.
+- Màu sắc hài hòa: Sử dụng bảng màu nhất quán và không quá sặc sỡ, tập trung vào việc truyền tải thông tin hiệu quả hơn là trang trí.
+
+*Tính nhất quán :*
+
+- Hiển thị rõ ràng các tùy chọn
+- Sử dụng biểu tượng quen thuộc: Các biểu tượng (icons) nên mang ý nghĩa rõ ràng và phổ biến để người dùng dễ dàng nhận ra chức năng của chúng.
+
+---
+
+End
