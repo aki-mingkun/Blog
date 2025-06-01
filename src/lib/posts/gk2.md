@@ -14,7 +14,7 @@ coverHeight: 9
 
 ## 1. Tổng quan kiến trúc hệ thống
 
-![alt text](<../../../static/images/cấu trúc hệ thống.png>)
+![alt text](/images/cấu trúc hệ thống.png>)
 
 
 ## 2. Thành phần chính
