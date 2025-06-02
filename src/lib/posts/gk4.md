@@ -21,65 +21,85 @@ coverHeight: 9
 ## 1. Fault Tolerance (Chịu lỗi)
 - **Đã đáp ứng một phần**
 
-### Backend (Flask)
-- Chạy trong container Docker, có cấu hình `restart: unless-stopped` giúp tự động khởi động lại nếu container dừng bất thường.
-- Nếu backend gặp lỗi hoặc mất dữ liệu:
-  - Toàn bộ chức năng backend sẽ bị ảnh hưởng.
-  - Chỉ có một instance backend, không có dự phòng.
-  - Chưa có cơ chế tự động chuyển đổi (failover), nhiều backend chạy song song hoặc cân bằng tải.
+### Hiện trạng
+- Chỉ có **1 backend**, **1 file database**.
+- Không có dự phòng, không có backup, không có failover.
 
-### Database (PickleDB)
-- Là cơ sở dữ liệu file-based, không hỗ trợ replication, backup hay failover.
-- Nếu file `tasks.db` bị hỏng hoặc mất, toàn bộ dữ liệu sẽ mất mà không thể phục hồi.
-
-### Frontend (React)
-- Chạy trong container Docker, có thể tự động khởi động lại nếu bị dừng.
-- Tuy nhiên, không có dịch vụ cloud (như Vercel) để tự động giám sát và phục hồi ở mức nền tảng.
+### Giải pháp đề xuất
+- **Backend:**
+  - Chạy nhiều instance backend (scale out), đặt sau load balancer (Nginx, HAProxy).
+  - Dùng Docker Swarm hoặc Kubernetes để tự động restart, thay thế container khi gặp sự cố.
+- **Database:**
+  - Chuyển sang database hỗ trợ replication, backup (PostgreSQL, MongoDB).
+  - Thiết lập backup định kỳ (cron job copy file hoặc dump dữ liệu).
+  - Nếu vẫn dùng PickleDB: viết script backup file `tasks.db` định kỳ sang nơi khác.
+- **Frontend:**
+  - Deploy trên cloud (Vercel, Netlify, AWS ECS) để tận dụng tự động phục hồi.
+  - Sử dụng healthcheck endpoint để kiểm tra tình trạng backend.
 
 ---
 
 ## 2. Distributed Communication (Giao tiếp phân tán)
-- **Đã đáp ứng**
+- **Đã đáp ứng một phần**
 
-### Triển khai phân tán
-- Các service (frontend, backend) có thể triển khai trên nhiều máy khác nhau bằng cách cấu hình địa chỉ IP/port.
-- Docker hỗ trợ phân tán container trên nhiều host, giúp dễ dàng mở rộng.
+### Hiện trạng
+- Các service giao tiếp qua HTTP REST API, có thể triển khai trên nhiều máy.
 
-### Giao tiếp qua HTTP REST API
-- **Frontend ↔ Backend**: Frontend React sử dụng `axios` hoặc `fetch` để gọi API RESTful từ Flask backend.
-- **Backend ↔ Database**: Flask backend thao tác trực tiếp với file PickleDB, không qua giao thức mạng.
-
-### Đặc điểm phân tán thực sự
-- Các thành phần có thể tách rời về máy chủ, nhưng hiện tại đang chạy gộp trên cùng một máy Docker host.
-- Chưa có triển khai cloud hoặc multi-region, nhưng kiến trúc cho phép mở rộng.
+### Giải pháp đề xuất
+- Đảm bảo địa chỉ API trong frontend **không hardcode localhost**.
+- Sử dụng service discovery (Consul, etcd) nếu triển khai nhiều backend.
+- Thêm HTTPS, xác thực API để đảm bảo bảo mật giao tiếp.
 
 ---
 
 ## 3. Sharding hoặc Replication (Phân mảnh hoặc Sao chép dữ liệu)
 **Chưa đáp ứng**
 
-- Dữ liệu hiện chỉ lưu tập trung trên một backend duy nhất sử dụng PickleDB.
-- Không có cơ chế phân mảnh (sharding) hoặc sao chép dữ liệu (replication).
+### Hiện trạng
+- Không có sharding hoặc replication, dữ liệu tập trung.
 
-### **Hướng phát triển**
-- Có thể triển khai nhiều backend, mỗi backend lưu một phần dữ liệu (sharding theo user/task).
-- Hoặc chuyển sang dùng hệ quản trị cơ sở dữ liệu mạnh hơn, hỗ trợ replication như MongoDB, PostgreSQL.
+### Giải pháp đề xuất
+- **Sharding:**
+  - Nếu số lượng user lớn, chia nhỏ dữ liệu theo user (mỗi backend phụ trách một nhóm user).
+  - Cần database hỗ trợ sharding (MongoDB, Cassandra).
+- **Replication:**
+  - Dùng database hỗ trợ replication (PostgreSQL, MongoDB) để có nhiều bản sao dữ liệu, tăng khả năng chịu lỗi.
+  - Thiết lập master-slave hoặc multi-primary replication.
+- **PickleDB không hỗ trợ các tính năng này, cần nâng cấp hệ quản trị cơ sở dữ liệu.**
+
 
 ---
 
 ## 4. Simple Monitoring / Logging (Giám sát/ghi log đơn giản)
-**Đã đáp ứng**
+**Đã đáp ứng một phần**
 
-- Backend đã ghi log các request và lỗi ra console, có thể xem qua lệnh `docker logs`.
-- Nếu cần, có thể mở rộng thêm:
-  - Endpoint `/health` để kiểm tra trạng thái.
-  - Dashboard log hoặc tích hợp công cụ giám sát (Prometheus, Grafana).
+### Hiện trạng
+- Log ra console, xem bằng `docker logs`.
+
+### Giải pháp đề xuất
+- Thêm endpoint `/health` ở backend để kiểm tra tình trạng service.
+- Gửi log ra file hoặc tích hợp hệ thống log tập trung (ELK stack, Loki).
+- Tích hợp Prometheus/Grafana để giám sát số lượng request, lỗi, thời gian phản hồi.
+- Thiết lập alert khi backend không phản hồi hoặc log có lỗi nghiêm trọng.
 
 ---
 ## 5. Basic Stress Test (Kiểm thử tải cơ bản)
  **Đã đáp ứng ở mức cơ bản**
 
-- Có thể thực hiện kiểm thử tải bằng cách chia sẻ ip mạng của máy chủ cho các máy khác.
+### Hiện trạng
+- Kiểm thử tải thủ công bằng cách truy cập từ nhiều máy qua ip của máy cá nhân.
+
+### Giải pháp
+- Sử dụng công cụ stress test:
+  - Apache JMeter
+  - k6
+  - Locust
+- Mô phỏng nhiều user đồng thời, đo:
+  - Thời gian phản hồi.
+  - Tỷ lệ lỗi.
+  - Ngưỡng chịu tải tối đa.
+- Deploy web lên server riêng
+
 ---
 
 End
