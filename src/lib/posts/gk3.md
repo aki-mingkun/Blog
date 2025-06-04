@@ -6,7 +6,7 @@ categories:
   - "sveltekit"
   - "markdown"
 
-coverImage: "/images/pickleDB.png"
+coverImage: "/images/tiendoduan.jpg"
 coverWidth: 16
 coverHeight: 9
 

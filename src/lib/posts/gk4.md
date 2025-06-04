@@ -6,7 +6,7 @@ categories:
   - "sveltekit"
   - "markdown"
 
-coverImage: "/images/pickleDB.png"
+coverImage: "/images/tieuchi.jpg"
 coverWidth: 16
 coverHeight: 9
 
@@ -101,5 +101,9 @@ coverHeight: 9
 - Deploy web lên server riêng
 
 ---
+
+
+[GithubProjectLink]https://github.com/aki-mingkun/Task
+[DriveLink]https://drive.google.com/drive/folders/1kZ4N2FoyNkNWGWCEy_TRo2_rbiOVF3IC?usp=drive_link
 
 End
